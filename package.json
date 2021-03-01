@@ -1,0 +1,16 @@
+{
+  "name": "power-tweeter",
+  "version": "1.0.0",
+  "description": "A bot to listen for latest tweets and populate them on the google api for analytics",
+  "main": "index.js",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "needle": "^2.6.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Yashveer Ramparsad",
+  "license": "ISC"
+}
