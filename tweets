@@ -1,0 +1,38 @@
+const needle = require("needle");
+require("dotenv").config();
+import TwitterApi from "twitter-api-v2";
+
+// The code below sets the bearer token from your environment variables
+// To set environment variables on macOS or Linux, run the export command below from the terminal:
+// export BEARER_TOKEN='YOUR-TOKEN'
+const token = process.env.BEARER_TOKEN;
+
+const client = new TwitterApi(token);
+
+const jackTimeline = await client.v2.userTimeline("CityPowerJhb", {
+  expansions: [
+    "attachments.media_keys",
+    "attachments.poll_ids",
+    "referenced_tweets.id",
+  ],
+  "media.fields": ["url"],
+});
+
+// jackTimeline.includes contains a TwitterV2IncludesHelper instance
+for await (const tweet of jackTimeline) {
+  const medias = jackTimeline.includes.medias(tweet);
+  const poll = jackTimeline.includes.poll(tweet);
+
+  if (medias.length) {
+    console.log(
+      "This tweet contains medias! URLs:",
+      medias.map((m) => m.url)
+    );
+  }
+  if (poll) {
+    console.log(
+      "This tweet contains a poll! Options:",
+      poll.options.map((opt) => opt.label)
+    );
+  }
+}
